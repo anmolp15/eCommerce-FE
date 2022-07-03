@@ -4,21 +4,16 @@ import { BASE_URL } from "../utils";
 import styles from "../css/home.module.css";
 import { Link } from "react-router-dom";
 
-export default function Home() {
-  // state for array of products
-  const [products, setProducts] = useState([]);
+export default function Home(props) {
+  const products = props.products;
+  const handleSetProducts = props.handleSetProducts 
+
   // state for list of categories to be displayed in drop down menu
   const [categories, setCategories] = useState([]);
   // state for selected category by user
   const [selectedCaregory, setSelectedCategory] = useState("");
 
-  // hook to fetch products data and set its state
-  useEffect(() => {
-    Axios.get(BASE_URL)
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.log(err));
-  }, []);
-
+  
   // hook to fetch all categories and set their state
   useEffect(() => {
     let url = `${BASE_URL}/categories`;
@@ -33,7 +28,7 @@ export default function Home() {
   }
 
   // function to display all products on home page using products state
-  function populateDOM() {
+  function populateDOM(products) {
     // map over the array and return each created product in jsx
     return products.map((item, index) => {
       return (
@@ -85,7 +80,7 @@ export default function Home() {
     }
     console.log(`${BASE_URL}/category/${selectedCaregory}`);
     Axios.get(`${BASE_URL}/category/${selectedCaregory}`).then((res) => {
-      setProducts(res.data);
+      handleSetProducts(res.data);
     });
   }
 
@@ -115,13 +110,24 @@ export default function Home() {
     );
   }
 
+  // sort products by price functionality 
+  // todo...............
+  function handleSortProducts() {
+    let sortedProducts = products.sort((a, b) => {
+      return a.price - b.price;
+    });
+    console.log(sortedProducts)
+  }
+
   return (
     <div>
       <div className={styles.wrapper}>
-        <button className={styles.sortByPrice}>Sort By Price</button>
+        <button className={styles.sortByPrice} onClick={handleSortProducts}>
+          Sort By Price
+        </button>
         <div className={styles.categories}>{listCategories()}</div>
       </div>
-      <div className={styles.container}>{populateDOM()}</div>
+      <div className={styles.container}>{populateDOM(products)}</div>
     </div>
   );
 }

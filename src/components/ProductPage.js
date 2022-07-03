@@ -3,8 +3,11 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "../css/product-page.module.css";
 import { BASE_URL } from "../utils";
+
 export default function ProductPage() {
+  // fetch product it from url
   const { prodId } = useParams();
+  // state for selected product initialized with a dummy/empty product object
   const [product, setProduct] = useState({
     image: "",
     title: "",
@@ -15,12 +18,14 @@ export default function ProductPage() {
       count: 0,
     },
   });
+  // to fetch details of the product
   useEffect(() => {
     console.log(`${BASE_URL}/${prodId}`);
     Axios.get(`${BASE_URL}/${prodId}`)
       .then((res) => setProduct(res.data))
       .catch((err) => console.log(err));
   }, [prodId]);
+  // return created product element with jsx
   return (
     <div>
       <div className={styles.container}>
