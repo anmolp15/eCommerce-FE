@@ -96,6 +96,14 @@ export default function UpdateProduct(props) {
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
         <button type="submit">Update Product</button>
+        <button
+          style={{ backgroundColor: "red" }}
+          onClick={() => {
+            navigator("/");
+          }}
+        >
+          Cancle
+        </button>
       </form>
     </div>
   );
