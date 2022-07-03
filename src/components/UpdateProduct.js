@@ -16,18 +16,19 @@ export default function UpdateProduct(props) {
     (item) => item.id.toString() === prodId
   );
 
-  // states for individual elements of the new product to be added
+  // states for individual elements of the product to be modified
   const [title, setTitle] = useState(selectedProduct.title);
   const [price, setPrice] = useState(selectedProduct.price);
   const [category, setCategory] = useState(selectedProduct.category);
   const [imageLink, setImageLink] = useState(selectedProduct.image);
   const [description, setDescription] = useState(selectedProduct.description);
 
-  // will be used to redirect to home page after successful addition of product
+  // will be used to redirect to home page after successful modification of the product
   const navigator = useNavigate();
 
   function modifyProduct(e) {
     e.preventDefault();
+    // create an object out of all states
     let modifiedProduct = {
       title,
       price,
@@ -39,6 +40,7 @@ export default function UpdateProduct(props) {
         count: selectedProduct.rating.count,
       },
     };
+    // and put it to server using Axios
     Axios.put(`${BASE_URL}/${prodId}`, modifiedProduct)
       .then((res) => {
         // alert user only on successfull resolution of promise
