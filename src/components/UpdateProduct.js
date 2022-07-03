@@ -102,7 +102,7 @@ export default function UpdateProduct(props) {
             navigator("/");
           }}
         >
-          Cancle
+          Cancel
         </button>
       </form>
     </div>
