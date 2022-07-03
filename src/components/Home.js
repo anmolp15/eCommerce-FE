@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function Home(props) {
   const products = props.products;
-  const handleSetProducts = props.handleSetProducts 
+  const handleSetProducts = props.handleSetProducts;
 
   // state for list of categories to be displayed in drop down menu
   const [categories, setCategories] = useState([]);

@@ -4,7 +4,6 @@ a {
 
 .container {
     width: 100vw;
-    height: 90vh;
     overflow-y: scroll;
     display: flex;
     flex-wrap: wrap;

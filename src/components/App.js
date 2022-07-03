@@ -31,11 +31,25 @@ function App() {
           element={<Home products={products} handleSetProducts={setProducts} />}
         />
         <Route exact path="/products/:prodId" element={<ProductPage />} />
-        <Route exact path="/create-product" element={<CreateProduct />} />
+        <Route
+          exact
+          path="/create-product"
+          element={
+            <CreateProduct
+              products={products}
+              handleSetProducts={setProducts}
+            />
+          }
+        />
         <Route
           exact
           path="/update-product/:prodId"
-          element={<UpdateProduct />}
+          element={
+            <UpdateProduct
+              products={products}
+              handleSetProducts={setProducts}
+            />
+          }
         />
         <Route exact path="/cart" element={<Cart />} />
       </Routes>
