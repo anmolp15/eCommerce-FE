@@ -4,6 +4,8 @@ a {
 
 .container {
     width: 100vw;
+    height: 90vh;
+    overflow-y: scroll;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -54,11 +56,13 @@ a {
     color: lightblue;
     text-decoration: underline;
 }
-.price{
+
+.price {
     font-size: 1.2rem;
     margin: 5px;
 }
-.price span{
+
+.price span {
     font-size: 1.3rem;
 }
 
@@ -93,7 +97,7 @@ a {
     font-size: 1.1rem;
 }
 
-.sortByPrice{
+.sortByPrice {
     background-color: aliceblue;
     padding: 10px 20px;
     border-radius: 20px;
@@ -101,7 +105,7 @@ a {
     /* position: absolute; */
 }
 
-.wrapper{
+.wrapper {
     width: 90vw;
     display: flex;
     justify-content: space-between;
@@ -109,6 +113,6 @@ a {
     /* padding: 0px 40px; */
 }
 
-.categories{
+.categories {
     margin: auto 0px;
 }
