@@ -34,7 +34,7 @@ export default function CreateProduct(props) {
       },
     };
     Axios.post(BASE_URL, newProduct)
-      .then((res) => {
+      .then(() => {
         // alert user only on successfull resolution of promise then add it to new array and redirect to home at last
         alert("Product added successfully!");
         setNewProductsArr([...newProductsArr, newProduct]);
