@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    width: 100vw;
+    background-color: rgb(23, 32, 87);
+    padding: 10px;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
+
+.utilities {
+    display: flex;
+}
+
+.logo,
+.categories,
+.user,
+.cart {
+    margin: 10px;
+    padding: 0px 15px;
+}
+
+.user {
+    padding: 0px 30px 0px 15px;
+}
+
+.logo {
+    user-select: none;
+    font-size: 1.5rem;
+    margin: 5px;
+    font-family: cursive;
+}
