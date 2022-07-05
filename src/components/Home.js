@@ -4,7 +4,6 @@ import { BASE_URL } from "../utils";
 import styles from "../css/home.module.css";
 import ProductItem from "./ProductItem";
 
-
 export default function Home(props) {
   const products = props.products;
   const handleSetProducts = props.handleSetProducts;
@@ -14,30 +13,39 @@ export default function Home(props) {
   // state for selected category by user
   const [selectedCaregory, setSelectedCategory] = useState("");
 
-  
   // hook to fetch all categories and set their state
   useEffect(() => {
     let url = `${BASE_URL}/categories`;
     Axios.get(url).then((categ) => setCategories(categ.data));
   }, []);
 
-  
   // function to display all products on home page using products state
   function populateDOM(products) {
-    // map over the array and return a new Product Item component 
+    // map over the array and return a new Product Item component
     return products.map((item, index) => {
-      return <ProductItem item={item} handleProductDelete = {handleProductDelete} key={index}/>
+      return (
+        <ProductItem
+          item={item}
+          handleProductDelete={handleProductDelete}
+          key={index}
+        />
+      );
     });
   }
 
   // function to fetch and display products of specified category
-  // todo................
   function displayCategoryProducts() {
-    console.log(`selectedCaregory from state - ${selectedCaregory}`);
+    // if the specified cayegort is All Categories
     if (selectedCaregory === "") {
+      // if specified category was already All categories and user again selects All Categories, then we should not make any request to the server, just return from here
+      // need beter condition check here.......................
+      if (products.length === 20) {
+        return;
+      }
+      Axios.get(BASE_URL).then((res) => handleSetProducts(res.data));
       return;
     }
-    console.log(`${BASE_URL}/category/${selectedCaregory}`);
+    // if specified category is anything but All Categories, we make the get request for specified category and set the products array to the received response
     Axios.get(`${BASE_URL}/category/${selectedCaregory}`).then((res) => {
       handleSetProducts(res.data);
     });
@@ -46,36 +54,48 @@ export default function Home(props) {
   // function to create select menu options using categories state
   function listCategories() {
     return (
-      <select
-        name="category"
-        id="category"
-        defaultValue="All categories"
-        onChange={(e) => {
-          console.log("chosen option - " + e.target.value);
-          let val = e.target.value;
-          setSelectedCategory(val);
-          displayCategoryProducts();
-        }}
-      >
-        <option value="">All Categories</option>
-        {categories.map((item, index) => {
-          return (
-            <option value={item} key={index}>
-              {item.toUpperCase()}
-            </option>
-          );
-        })}
-      </select>
+      <>
+        <select
+          name="category"
+          id="category"
+          defaultValue="All categories"
+          onChange={(e) => {
+            let val = e.target.value;
+            setSelectedCategory(val);
+          }}
+        >
+          <option value="">All Categories</option>
+          {categories.map((item, index) => {
+            return (
+              <option value={item} key={index}>
+                {item.toUpperCase()}
+              </option>
+            );
+          })}
+        </select>
+        <button
+          onClick={displayCategoryProducts}
+          style={{
+            backgroundColor: "grey",
+            borderRadius: "20%",
+            color: "white",
+            padding: " 5px 10px",
+            margin: "10px",
+          }}
+        >
+          Get
+        </button>
+      </>
     );
   }
 
-  // sort products by price functionality 
+  // sort products by price functionality
   // todo...............
   function handleSortProducts() {
     let sortedProducts = products.sort((a, b) => {
       return a.price - b.price;
     });
-    console.log(sortedProducts)
+    console.log(sortedProducts);
   }
 
   return (
