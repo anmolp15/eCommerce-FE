@@ -4,10 +4,9 @@ import { Link } from "react-router-dom";
 
 export default function ProductItem(props) {
     let item = props.item;
-    let index = props.index;
     let handleProductDelete = props.handleProductDelete;
     return (
-        <div className={styles.product} key={index}>
+        <div className={styles.product}>
           <div className={styles.productImage}>
             <img src={item.image} alt="item" />{" "}
           </div>

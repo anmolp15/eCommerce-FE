@@ -22,12 +22,11 @@ export default function Home(props) {
   }, []);
 
   
-
   // function to display all products on home page using products state
   function populateDOM(products) {
     // map over the array and return a new Product Item component 
     return products.map((item, index) => {
-      return <ProductItem item={item} index = {index}  handleProductDelete = {handleProductDelete}/>
+      return <ProductItem item={item} handleProductDelete = {handleProductDelete} key={index}/>
     });
   }
 
