@@ -2,12 +2,13 @@ import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils";
 import styles from "../css/home.module.css";
-import { Link } from "react-router-dom";
+import ProductItem from "./ProductItem";
+
 
 export default function Home(props) {
   const products = props.products;
   const handleSetProducts = props.handleSetProducts;
-
+  const handleProductDelete = props.handleProductDelete;
   // state for list of categories to be displayed in drop down menu
   const [categories, setCategories] = useState([]);
   // state for selected category by user
@@ -20,54 +21,13 @@ export default function Home(props) {
     Axios.get(url).then((categ) => setCategories(categ.data));
   }, []);
 
-  // function to send delete request to server using product id
-  function handleProductDelete(id) {
-    Axios.delete(`${BASE_URL}/${id}`)
-      .then(() => alert("Product Deleted!"))
-      .catch((err) => console.log(err));
-  }
+  
 
   // function to display all products on home page using products state
   function populateDOM(products) {
-    // map over the array and return each created product in jsx
+    // map over the array and return a new Product Item component 
     return products.map((item, index) => {
-      return (
-        <div className={styles.product} key={index}>
-          <div className={styles.productImage}>
-            <img src={item.image} alt="item" />{" "}
-          </div>
-          <div className={styles.productTitle}>
-            <Link to={`/products/${item.id}`}>{item.title}</Link>
-          </div>
-          <div className={styles.productCategory}>({item.category})</div>
-          <div className={styles.price}>
-            <span>$ </span> {item.price}
-          </div>
-          <div className={styles.ratings}>
-            <div className={styles.rate}>
-              <i className="fa fa-star" aria-hidden="true"></i>{" "}
-              {item.rating.rate}
-            </div>
-            <div className={styles.count}>{item.rating.count} ratings</div>
-          </div>
-          <div className={styles.btns}>
-            <button className={styles.editProduct}>
-              <Link to={`/update-product/${item.id}`}>
-                <i className="fa fa-pencil" aria-hidden="true"></i>
-              </Link>
-            </button>
-            <button
-              className={styles.deleteProduct}
-              onClick={() => handleProductDelete(item.id)}
-            >
-              <i className="fa fa-trash" aria-hidden="true"></i>
-            </button>
-            <button className={styles.addToCart}>
-              <i className="fa fa-cart-plus" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-      );
+      return <ProductItem item={item} index = {index}  handleProductDelete = {handleProductDelete}/>
     });
   }
 

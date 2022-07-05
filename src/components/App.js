@@ -21,6 +21,13 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
+  // function to send delete request to server using product id
+  function handleProductDelete(id) {
+    Axios.delete(`${BASE_URL}/${id}`)
+      .then(() => alert("Product Deleted!"))
+      .catch((err) => console.log(err));
+  }
+
   return (
     <div className="App">
       <NavBar />
@@ -28,7 +35,13 @@ function App() {
         <Route
           exact
           path="/"
-          element={<Home products={products} handleSetProducts={setProducts} />}
+          element={
+            <Home
+              products={products}
+              handleSetProducts={setProducts}
+              handleProductDelete={handleProductDelete}
+            />
+          }
         />
         <Route exact path="/products/:prodId" element={<ProductPage />} />
         <Route
