@@ -38,16 +38,13 @@ export default function Login(props) {
       });
   }
 
-  // after successful login, redirect user to home
-  function displayLoginMessage() {
-    navigate("/");
-    return <h1>Log In Successfull! Redirecting...</h1>;
-  }
-
   return (
     <div className={styles.container}>
       {loggedIn ? (
-        displayLoginMessage()
+        <>
+          <h1>'Log In Successfull! Redirecting...'</h1>
+          {navigate("/")}
+        </>
       ) : (
         <form onSubmit={handleLogin}>
           <h4 className={styles.errorMessage}>
