@@ -13,6 +13,8 @@ export default function Home(props) {
   // state for selected category by user
   const [selectedCaregory, setSelectedCategory] = useState("");
 
+  const [arraySorted, setArraySorted] = useState(false);
+
   // hook to fetch all categories and set their state
   useEffect(() => {
     let url = `${BASE_URL}/categories`;
@@ -30,24 +32,6 @@ export default function Home(props) {
           key={index}
         />
       );
-    });
-  }
-
-  // function to fetch and display products of specified category
-  function displayCategoryProducts() {
-    // if the specified cayegort is All Categories
-    if (selectedCaregory === "") {
-      // if specified category was already All categories and user again selects All Categories, then we should not make any request to the server, just return from here
-      // need beter condition check here.......................
-      if (products.length === 20) {
-        return;
-      }
-      Axios.get(BASE_URL).then((res) => handleSetProducts(res.data));
-      return;
-    }
-    // if specified category is anything but All Categories, we make the get request for specified category and set the products array to the received response
-    Axios.get(`${BASE_URL}/category/${selectedCaregory}`).then((res) => {
-      handleSetProducts(res.data);
     });
   }
 
@@ -89,20 +73,53 @@ export default function Home(props) {
     );
   }
 
-  // sort products by price functionality
-  // todo...............
-  function handleSortProducts() {
-    let sortedProducts = products.sort((a, b) => {
-      return a.price - b.price;
+  // function to fetch and display products of specified category
+  function displayCategoryProducts() {
+    // if the specified cayegort is All Categories
+    if (selectedCaregory === "") {
+      // if specified category was already All categories and user again selects All Categories, then we should not make any request to the server, just return from here
+      // need beter condition check here.......................
+      if (products.length === 20) {
+        return;
+      }
+      Axios.get(BASE_URL).then((res) => handleSetProducts(res.data));
+      return;
+    }
+    // if specified category is anything but All Categories, we make the get request for specified category and set the products array to the received response
+    Axios.get(`${BASE_URL}/category/${selectedCaregory}`).then((res) => {
+      handleSetProducts(res.data);
     });
-    console.log(sortedProducts);
   }
+
+  // sort products by price functionality
+  useEffect(() => {
+    let sortedProducts = [...products].sort((a, b) => a.price - b.price);
+    if (arraySorted) {
+      handleSetProducts(sortedProducts);
+    } else {
+      Axios.get(BASE_URL)
+        .then((res) => handleSetProducts(res.data))
+        .catch((err) => console.log(err));
+    }
+    // eslint-disable-next-line
+  }, [arraySorted]);
 
   return (
     <div>
       <div className={styles.wrapper}>
-        <button className={styles.sortByPrice} onClick={handleSortProducts}>
+        <button
+          className={styles.sortByPrice}
+          onClick={() => setArraySorted(!arraySorted)}
+        >
           Sort By Price
+          {arraySorted ? (
+            <span>
+              {" "}
+              <i className="fa fa-times" aria-hidden="true"></i>
+            </span>
+          ) : (
+            ``
+          )}
         </button>
         <div className={styles.categories}>{listCategories()}</div>
       </div>

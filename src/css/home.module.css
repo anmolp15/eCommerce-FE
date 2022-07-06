@@ -104,6 +104,10 @@ a {
     /* position: absolute; */
 }
 
+.sortByPrice span i{
+    margin-left: 3px;
+}
+
 .wrapper {
     width: 90vw;
     display: flex;
