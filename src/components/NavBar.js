@@ -2,7 +2,9 @@ import React from "react";
 import styles from "../css/navbar.module.css";
 import { Link } from "react-router-dom";
 
-export default function NavBar() {
+export default function NavBar(props) {
+  let loggenIn = props.loggedIn;
+  let handleSetLoggedIn = props.handleSetLoggedIn;
   return (
     <div>
       <div className={styles.container}>
@@ -20,7 +22,23 @@ export default function NavBar() {
             </Link>
           </div>
           <div className={styles.user}>
-            <i className="fa fa-user-circle" aria-hidden="true"></i>
+            {loggenIn ? (
+              <i
+                className="fa fa-user-circle"
+                aria-hidden="true"
+                onClick={() => {
+                  //clear local storage....
+                  handleSetLoggedIn(false);
+                }}
+              >
+                {" "}
+                Logout
+              </i>
+            ) : (
+              <span>
+                <Link to={`/login`}>Login</Link>
+              </span>
+            )}
           </div>
         </div>
       </div>

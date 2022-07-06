@@ -9,11 +9,13 @@ import CreateProduct from "./CreateProduct";
 import UpdateProduct from "./UpdateProduct";
 import Cart from "./Cart";
 import ProductPage from "./ProductPage";
+import Login from "./Login";
 
 function App() {
   // state for array of products
   const [products, setProducts] = useState([]);
-
+  // to maintain login state and achieve conditional rendering
+  const [loggedIn, setLoggedIn] = useState(false);
   // hook to fetch products data and set its state
   useEffect(() => {
     Axios.get(BASE_URL)
@@ -30,8 +32,10 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar />
+      {/* navbar component which will be rendered in all cases out of routes */}
+      <NavBar loggedIn={loggedIn} handleSetLoggedIn={setLoggedIn} />
       <Routes>
+        {/* route to render Home component */}
         <Route
           exact
           path="/"
@@ -43,7 +47,9 @@ function App() {
             />
           }
         />
+        {/* route to render a specific product component */}
         <Route exact path="/products/:prodId" element={<ProductPage />} />
+        {/* route to create a new product */}
         <Route
           exact
           path="/create-product"
@@ -54,6 +60,7 @@ function App() {
             />
           }
         />
+        {/* route to update the specific component */}
         <Route
           exact
           path="/update-product/:prodId"
@@ -64,7 +71,16 @@ function App() {
             />
           }
         />
+        {/* rout to cart componet  */}
         <Route exact path="/cart" element={<Cart />} />
+        {/* route to login page   */}
+        <Route
+          exact
+          path="/login"
+          element={
+            <Login loggedIn={loggedIn} handleSetLoggedIn={setLoggedIn} />
+          }
+        />
       </Routes>
     </div>
   );

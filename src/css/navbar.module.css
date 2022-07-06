@@ -1,6 +1,7 @@
 .container {
     display: flex;
     width: 100vw;
+    height: 7vh;
     background-color: rgb(23, 32, 87);
     padding: 10px;
     align-items: center;
@@ -17,10 +18,11 @@
 .cart {
     margin: 10px;
     padding: 0px 15px;
+    cursor: pointer;
 }
 
 .user {
-    padding: 0px 30px 0px 15px;
+    padding-right: 50px;
 }
 
 .logo {
@@ -30,12 +32,7 @@
     font-family: cursive;
 }
 
-.logo a {
-    color: white;
-    text-decoration: none;
-}
-
-.cart a {
+.cart a , .user a, .logo a{
     color: white;
     text-decoration: none;
 }
