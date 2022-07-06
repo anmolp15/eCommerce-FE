@@ -59,13 +59,7 @@ export default function Home(props) {
         </select>
         <button
           onClick={displayCategoryProducts}
-          style={{
-            backgroundColor: "grey",
-            borderRadius: "20%",
-            color: "white",
-            padding: " 5px 10px",
-            margin: "10px",
-          }}
+          className={styles.getCategories}
         >
           Get
         </button>

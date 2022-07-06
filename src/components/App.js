@@ -10,6 +10,7 @@ import UpdateProduct from "./UpdateProduct";
 import Cart from "./Cart";
 import ProductPage from "./ProductPage";
 import Login from "./Login";
+import Error404 from "./Error404";
 
 function App() {
   // state for array of products
@@ -81,6 +82,8 @@ function App() {
             <Login loggedIn={loggedIn} handleSetLoggedIn={setLoggedIn} />
           }
         />
+        {/* any other route i.e. handle Error 404 - Page Not Found */}
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </div>
   );

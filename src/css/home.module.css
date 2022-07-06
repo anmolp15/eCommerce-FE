@@ -120,3 +120,11 @@ a {
     margin: auto 0px;
     padding: 10px;
 }
+
+.getCategories{
+    background-color: grey;
+    border-radius: 20%;
+    color: white;
+    padding: 5px 10px;
+    margin: 10px;
+}
