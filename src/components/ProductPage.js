@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import styles from "../css/product-page.module.css";
 import { BASE_URL } from "../utils";
 
+import { addToCart } from "../store/cartSlice";
+import { useDispatch } from "react-redux";
+
 export default function ProductPage() {
   // fetch product it from url
   const { prodId } = useParams();
@@ -26,6 +29,13 @@ export default function ProductPage() {
       .catch((err) => console.log(err));
   }, [prodId]);
   // return created product element with jsx
+
+  const dispatch = useDispatch();
+  // add item to redux store
+  function handleAddToCart(item) {
+    dispatch(addToCart(item));
+  }
+
   return (
     <div>
       <div className={styles.container}>
@@ -46,7 +56,7 @@ export default function ProductPage() {
             {product.price}
           </div>
           <div className={styles.description}>{product.description}</div>
-          <button className={styles.addToCart}>Add To Cart</button>
+          <button className={styles.addToCart} onClick={() => handleAddToCart(product)}>Add To Cart</button>
         </div>
       </div>
     </div>
