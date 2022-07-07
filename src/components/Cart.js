@@ -1,5 +1,6 @@
 import React from "react";
-import { useSelector , useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import styles from "../css/cart.module.css";
 import { removeFromCart } from "../store/cartSlice";
 
@@ -10,14 +11,17 @@ export default function Cart() {
 
   function getNetAmount() {
     let sum = 0;
-    cartItems.forEach(item => {
+    cartItems.forEach((item) => {
       sum += item.price;
     });
     return sum;
   }
 
-  function handleRemoveItem (id) {
-    dispatch(removeFromCart(id))
+  function handleRemoveItem(id) {
+    dispatch(removeFromCart(id));
+    toast.warning("Item deleted from cart", {
+      position: "bottom-center",
+    });
   }
   return (
     <div className={styles.container}>

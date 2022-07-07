@@ -6,13 +6,15 @@ import ProductItem from "./ProductItem";
 import { setProducts } from "../store/productsSlice";
 import { useSelector, useDispatch } from "react-redux";
 
+import { toast } from "react-toastify";
+
 export default function Home(props) {
   const dispatch = useDispatch();
   const { data: products } = useSelector((state) => state.products);
   function handleSetProducts(prods) {
-    dispatch(setProducts(prods))
+    dispatch(setProducts(prods));
   }
-  
+
   const handleProductDelete = props.handleProductDelete;
   // state for list of categories to be displayed in drop down menu
   const [categories, setCategories] = useState([]);
@@ -109,7 +111,21 @@ export default function Home(props) {
       <div className={styles.wrapper}>
         <button
           className={styles.sortByPrice}
-          onClick={() => setArraySorted(!arraySorted)}
+          onClick={() => {
+            if (!arraySorted) {
+              toast.info("Items sorted by price", {
+                position: "bottom-center",
+                autoClose: 1500,
+              })
+            }
+            else{
+              toast.info("Sorting removed", {
+                position: "bottom-center",
+                autoClose: 1500,
+              })
+            }
+            setArraySorted(!arraySorted);
+          }}
         >
           Sort By Price
           {arraySorted ? (

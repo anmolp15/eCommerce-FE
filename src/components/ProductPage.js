@@ -6,6 +6,7 @@ import { BASE_URL } from "../utils";
 
 import { addToCart } from "../store/cartSlice";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function ProductPage() {
   // fetch product it from url
@@ -33,6 +34,10 @@ export default function ProductPage() {
   // add item to redux store
   function handleAddToCart(item) {
     dispatch(addToCart(item));
+    toast.success(`${item.title} added to cart`, {
+      position: "bottom-center",
+      autoClose: 3000,
+    });
   }
 
   return (

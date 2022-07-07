@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { addToCart } from "../store/cartSlice";
 import { useDispatch } from "react-redux";
 
+import { toast } from "react-toastify";
+
 export default function ProductItem(props) {
   let item = props.item;
   let handleProductDelete = props.handleProductDelete;
@@ -14,6 +16,10 @@ export default function ProductItem(props) {
   // add item to redux store
   function handleAddToCart(item) {
     dispatch(addToCart(item));
+    toast.success(`${item.title} added to cart`, {
+      position: "bottom-center",
+      autoClose: 3000,
+    });
   }
   return (
     <div className={styles.product}>
