@@ -1,9 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector , useDispatch } from "react-redux";
 import styles from "../css/cart.module.css";
+import { removeFromCart } from "../store/cartSlice";
 
 export default function Cart() {
   const cartItems = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
 
   function getNetAmount() {
     let sum = 0;
@@ -13,6 +16,9 @@ export default function Cart() {
     return sum;
   }
 
+  function handleRemoveItem (id) {
+    dispatch(removeFromCart(id))
+  }
   return (
     <div className={styles.container}>
       {cartItems.map((item, index) => {
@@ -28,7 +34,7 @@ export default function Cart() {
               </div>
             </div>
             <div className={styles.itemDelete}>
-              <button>
+              <button onClick={() => handleRemoveItem(item.id)}>
                 <i className="fa fa-trash" aria-hidden="true"></i>
               </button>
             </div>
