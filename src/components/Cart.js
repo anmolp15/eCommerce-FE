@@ -19,6 +19,11 @@ export default function Cart() {
 
   function handleRemoveItem(id) {
     dispatch(removeFromCart(id));
+    let oldCart = JSON.parse(localStorage.getItem("cartItems"));
+    localStorage.setItem(
+      "cartItems",
+      JSON.stringify(oldCart.filter((item) => item.id !== id))
+    );
     toast.warning("Item deleted from cart", {
       position: "bottom-center",
     });
