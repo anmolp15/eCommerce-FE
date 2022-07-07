@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../css/createProduct.module.css";
 import { BASE_URL } from "../utils";
+import { useSelector } from "react-redux";
 
-export default function CreateProduct(props) {
-  // products array received as props and will be used to initialize new products array
-  const products = props.products;
+export default function CreateProduct() {
+  const { data: products } = useSelector((state) => state.products);
+
   //state for new products array which will contain newly added product
   const [newProductsArr, setNewProductsArr] = useState(products);
   // states for individual elements of the new product to be added

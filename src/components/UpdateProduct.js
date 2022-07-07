@@ -3,10 +3,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import Axios from "axios";
 import { BASE_URL } from "../utils";
 import styles from "../css/createProduct.module.css";
+import { useSelector } from "react-redux";
 
-export default function UpdateProduct(props) {
-  const products = props.products;
-  // const handleSetProducts = props.handleSetProducts;
+export default function UpdateProduct() {
+  const {data: products} = useSelector(state => state.products)
 
   // fetch product id from url
   const { prodId } = useParams();

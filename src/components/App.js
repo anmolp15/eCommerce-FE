@@ -12,17 +12,19 @@ import ProductPage from "./ProductPage";
 import Login from "./Login";
 import Error404 from "./Error404";
 
+import { fetchProducts } from "../store/productsSlice";
+import { useDispatch } from "react-redux";
+
 function App() {
-  // state for array of products
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+
   // to maintain login state and achieve conditional rendering
   const [loggedIn, setLoggedIn] = useState(false);
-  // hook to fetch products data and set its state
+
+  // hook to fetch products data from store
   useEffect(() => {
-    Axios.get(BASE_URL)
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.log(err));
-  }, []);
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   // function to send delete request to server using product id
   function handleProductDelete(id) {
@@ -40,37 +42,17 @@ function App() {
         <Route
           exact
           path="/"
-          element={
-            <Home
-              products={products}
-              handleSetProducts={setProducts}
-              handleProductDelete={handleProductDelete}
-            />
-          }
+          element={<Home handleProductDelete={handleProductDelete} />}
         />
         {/* route to render a specific product component */}
         <Route exact path="/products/:prodId" element={<ProductPage />} />
         {/* route to create a new product */}
-        <Route
-          exact
-          path="/create-product"
-          element={
-            <CreateProduct
-              products={products}
-              handleSetProducts={setProducts}
-            />
-          }
-        />
+        <Route exact path="/create-product" element={<CreateProduct />} />
         {/* route to update the specific component */}
         <Route
           exact
           path="/update-product/:prodId"
-          element={
-            <UpdateProduct
-              products={products}
-              handleSetProducts={setProducts}
-            />
-          }
+          element={<UpdateProduct />}
         />
         {/* rout to cart componet  */}
         <Route exact path="/cart" element={<Cart />} />

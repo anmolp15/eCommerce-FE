@@ -3,10 +3,16 @@ import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils";
 import styles from "../css/home.module.css";
 import ProductItem from "./ProductItem";
+import { setProducts } from "../store/productsSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Home(props) {
-  const products = props.products;
-  const handleSetProducts = props.handleSetProducts;
+  const dispatch = useDispatch();
+  const { data: products } = useSelector((state) => state.products);
+  function handleSetProducts(prods) {
+    dispatch(setProducts(prods))
+  }
+  
   const handleProductDelete = props.handleProductDelete;
   // state for list of categories to be displayed in drop down menu
   const [categories, setCategories] = useState([]);

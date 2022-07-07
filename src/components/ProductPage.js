@@ -23,7 +23,6 @@ export default function ProductPage() {
   });
   // to fetch details of the product
   useEffect(() => {
-    console.log(`${BASE_URL}/${prodId}`);
     Axios.get(`${BASE_URL}/${prodId}`)
       .then((res) => setProduct(res.data))
       .catch((err) => console.log(err));
@@ -56,7 +55,12 @@ export default function ProductPage() {
             {product.price}
           </div>
           <div className={styles.description}>{product.description}</div>
-          <button className={styles.addToCart} onClick={() => handleAddToCart(product)}>Add To Cart</button>
+          <button
+            className={styles.addToCart}
+            onClick={() => handleAddToCart(product)}
+          >
+            Add To Cart
+          </button>
         </div>
       </div>
     </div>
