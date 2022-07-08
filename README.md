@@ -20,3 +20,7 @@ Only Registered User will be able to login, few of them are listed below :-
 "username": "derek",
 "password": "jklg*_56"
 }
+
+
+# Checkout here - 
+https://e-commerce-fe-anmol-pandey.netlify.app/
