@@ -50,10 +50,18 @@ export default function Home(props) {
         <select
           name="category"
           id="category"
-          defaultValue="All categories"
+          value={selectedCaregory}
           onChange={(e) => {
             let val = e.target.value;
-            setSelectedCategory(val);
+            // compare with previous state and make network call only iof state is changed
+            setSelectedCategory((prevProps) => {
+              if (prevProps === val) {
+                return val;
+              } else {
+                displayCategoryProducts(val);
+                return val;
+              }
+            });
           }}
         >
           <option value="">All Categories</option>
@@ -65,30 +73,24 @@ export default function Home(props) {
             );
           })}
         </select>
-        <button
-          onClick={displayCategoryProducts}
-          className={styles.getCategories}
-        >
-          Get
-        </button>
       </>
     );
   }
 
   // function to fetch and display products of specified category
-  function displayCategoryProducts() {
+  function displayCategoryProducts(val) {
     // if the specified cayegort is All Categories
-    if (selectedCaregory === "") {
+    if (val === "") {
       // if specified category was already All categories and user again selects All Categories, then we should not make any request to the server, just return from here
       // need beter condition check here.......................
-      if (products.length === 20) {
-        return;
-      }
+      // if (products.length === 20) {
+      //   return;
+      // }
       Axios.get(BASE_URL).then((res) => handleSetProducts(res.data));
       return;
     }
     // if specified category is anything but All Categories, we make the get request for specified category and set the products array to the received response
-    Axios.get(`${BASE_URL}/category/${selectedCaregory}`).then((res) => {
+    Axios.get(`${BASE_URL}/category/${val}`).then((res) => {
       handleSetProducts(res.data);
     });
   }
@@ -116,13 +118,12 @@ export default function Home(props) {
               toast.info("Items sorted by price", {
                 position: "bottom-center",
                 autoClose: 1500,
-              })
-            }
-            else{
+              });
+            } else {
               toast.info("Sorting removed", {
                 position: "bottom-center",
                 autoClose: 1500,
-              })
+              });
             }
             setArraySorted(!arraySorted);
           }}
