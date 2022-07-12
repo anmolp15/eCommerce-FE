@@ -34,6 +34,7 @@ export default function NavBar(props) {
                 aria-hidden="true"
                 onClick={() => {
                   //clear local storage....
+                  localStorage.removeItem('jwt');
                   handleSetLoggedIn(false);
                 }}
               >

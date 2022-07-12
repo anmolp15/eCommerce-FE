@@ -27,7 +27,8 @@ export default function Login(props) {
     })
       .then((res) => {
         // add token to local storage and make proper use of this token
-        console.log(res.data.token);
+        // console.log(res.data);
+        localStorage.setItem('jwt', 'BEARER ' + res.data.token)
         handleSetLoggedIn(true);
       })
       .catch((err) => {
@@ -53,6 +54,7 @@ export default function Login(props) {
           <h1>Log in</h1>
 
           <input
+            required
             type="text"
             name="username"
             placeholder="Enter Username"
@@ -61,6 +63,7 @@ export default function Login(props) {
           />
           <br />
           <input
+            required
             type="password"
             placeholder="Enter Password"
             value={password}
