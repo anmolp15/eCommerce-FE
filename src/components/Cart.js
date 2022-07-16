@@ -45,6 +45,8 @@ export default function Cart() {
   }
 
   async function handleCheckout(amount) {
+    amount *= 1000;
+    console.log(`amount in paise = ${amount} in ${typeof(amount)}`)
     const res = await loadScript();
     if (!res) {
       alert("Payment Failed!");
@@ -54,7 +56,7 @@ export default function Cart() {
     const options = {
       key: "rzp_test_8BiyI71UqrlDqT",
       currency: "INR",
-      amount: amount * 100 * 10,
+      amount: amount,
       name: "E Commerce",
       description: "We have extremely low dollar conversion rate",
       handler: (res) => {
