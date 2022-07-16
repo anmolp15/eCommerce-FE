@@ -28,6 +28,47 @@ export default function Cart() {
       position: "bottom-center",
     });
   }
+
+  // razorpay integration starts
+  function loadScript() {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  }
+
+  async function handleCheckout(amount) {
+    const res = await loadScript();
+    if (!res) {
+      alert("Payment Failed!");
+      return;
+    }
+
+    const options = {
+      key: "rzp_test_8BiyI71UqrlDqT",
+      currency: "INR",
+      amount: amount * 100 * 10,
+      name: "E Commerce",
+      description: "We have extremely low dollar conversion rate",
+      handler: (res) => {
+        alert(
+          `Payment Successfull with Payment ID - ${res.razorpay_payment_id}`
+        );
+      },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  }
+  // razorpay integration ends
+
   return (
     <div className={styles.container}>
       {cartItems.map((item, index) => {
@@ -51,6 +92,16 @@ export default function Cart() {
         );
       })}
       <div className={styles.totalAmount}>Total : $ {getNetAmount()}</div>
+      {getNetAmount() ? (
+        <button
+          className={styles.checkout}
+          onClick={() => handleCheckout(getNetAmount())}
+        >
+          Proceed To Checkout
+        </button>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
